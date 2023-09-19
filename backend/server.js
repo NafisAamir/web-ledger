@@ -1,26 +1,26 @@
 const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
+// const session = require('express-session');
+// const passport = require('passport');
 const mongoose = require('mongoose');
+const {recipeController}=require("./routes/recipe.routes")
+const {userController}=require("./routes/user.routes")
+const {connection}=require("./config/db.js")
+const {authentication}=require("./middlewares/authentication")
 const app = express();
+require("dotenv").config();
 
 // Middleware configuration
 app.use(express.json());
-// app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cors());
 
-// Connect to MongoDB
-// mongoose.connect('mongodb://localhost/your-database', { useNewUrlParser: true });
+app.use("/user", userController);
+app.use("/search", recipeController);
 
-// Define routes
-// const recipeRoutes = require('./routes/recipeRoutes');
-// const userRoutes = require('./routes/userRoutes');
+app.use(authentication);
+app.use("/favourite", favouriteController);
 
-// app.use('/api/recipes', recipeRoutes);
-// app.use('/api/users', userRoutes);
 
-// Start the server
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
