@@ -1,0 +1,1 @@
+This app is deployed on the link : https://web-ledger-front-end.vercel.app/
